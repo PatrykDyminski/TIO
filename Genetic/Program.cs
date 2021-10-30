@@ -1,4 +1,8 @@
-﻿using System.Numerics;
+﻿using Genetic;
+using Genetic.Cross;
+using Genetic.Mutation;
+using Genetic.Selection;
+using System.Numerics;
 using Tio.Genetic;
 
 string berlin11 = "berlin11_modified.tsp";
@@ -11,17 +15,16 @@ string berlin52 = "berlin52.tsp";
 string filename = berlin11;
 Vector2[] cities = DataReader.ReadFile(filename);
 
-var popSize = 300;
-var generations = 400;
-var crossProb = 0.8f;
-var mutProb = 0.35f;
-var tourSize = 10;
-
-int cycles = 5;
-
-var (best, worst, avg, std) = Utils.RunTests(cycles, cities, popSize, generations, crossProb, mutProb, tourSize);
-//var testResult = RandomSolution.RandomAlgorithm2(cities, 1000000);
-//var testResult = GreedySolution.GreedyAlgorithmAll(cities);
+var (best, worst, avg, std) = new TestRunnerBuilder()
+  .WithPopulationSize(300)
+  .WithNumberOfGenerations(400)
+  .WithSelection(new Tour(10))
+  .WithCross(new Cross())
+  .WithCrossProb(0.8f)
+  .WithMutation(new Inversion())
+  .WithMutationProb(0.35f)
+  //.WithCities(cities)
+  .BuildAndRunTests(5);
 
 Console.WriteLine("Best: " + best);
 Console.WriteLine("Worst: " + worst);

@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿using Genetic.Cross;
+using Genetic.Mutation;
+using Genetic.Selection;
+using System.Numerics;
 
 namespace Tio.Genetic;
 
@@ -78,14 +81,31 @@ internal class Utils
     Console.WriteLine("End of Population");
   }
 
-  public static (float best, float worst, float avg, float std) RunTests(int cycles, Vector2[] cities, int popSize, int generations, float crossProb, float mutProb, int tourSize)
+  public static (float best, float worst, float avg, float std) RunTests(
+    int cycles, 
+    Vector2[] cities, 
+    int popSize, 
+    int generations, 
+    float crossProb, 
+    float mutProb, 
+    ISelection selection,
+    ICross cross,
+    IMutation mutation)
   {
 
     float[] results = new float[cycles];
 
     for (int i = 0; i < cycles; i++)
     {
-      var (gene, score) = GeneticSolution.GeneticAlgorithm(cities, popSize, generations, crossProb, mutProb, tourSize);
+      var (gene, score) = GeneticSolution.GeneticAlgorithm(
+        cities, 
+        popSize, 
+        generations, 
+        crossProb, 
+        mutProb, 
+        selection, 
+        cross, 
+        mutation);
 
       results[i] = score;
 
