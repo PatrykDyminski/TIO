@@ -1,12 +1,12 @@
 ﻿namespace Genetic.Cross;
 
-internal class Cross : ICross
+internal class OX : ICross
 {
-  (int[] g1, int[] g2) ICross.Cross(int[] parent1, int[] parent2)
+  public (int[] g1, int[] g2) Cross(int[] parent1, int[] parent2)
   {
     int length = parent1.Length;
 
-    Random rnd = new Random();
+    Random rnd = new();
     int i = rnd.Next(0, length);
     int j = rnd.Next(i, length);
 

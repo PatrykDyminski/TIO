@@ -56,7 +56,7 @@ internal class GeneticSolution
       }
 
       //Utils.PrintPopulation(tempPop);
-      prevPop = tempPop.Select(a => a.ToArray()).ToArray();
+      prevPop = tempPop;
 
       var bestInPop = Utils.BestResultFromPopulation(prevPop, cities);
       var worstInPop = Utils.WorstResultFromPopulation(prevPop, cities);

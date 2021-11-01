@@ -24,10 +24,9 @@ internal class Tour : ISelection
     //liczenie wszytkich sum
     for (int i = 0; i < popSize; i++)
     {
-      sums[i] = Utils.SumDistance(pop[i], cities);
+      var sum = Utils.SumDistance(pop[i], cities);
+      sums[i] = sum;
     }
-
-    //sums.ToList().ForEach(i => Console.WriteLine(i.ToString()));
 
     int[][] selectedPop = new int[popSize][];
 
@@ -58,6 +57,7 @@ internal class Tour : ISelection
           bestIndex = randomSelected[l];
         }
       }
+
       selectedPop[i] = pop[bestIndex];
     }
 
