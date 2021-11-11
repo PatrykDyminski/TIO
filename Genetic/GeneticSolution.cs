@@ -29,6 +29,7 @@ internal class GeneticSolution
 
     for (int i = 0; i < generations; i++)
     {
+      //Console.WriteLine("Gen: " + i);
       var newPop = selection.Select(prevPop, cities);
       int[][] tempPop = new int[popSize][];
 

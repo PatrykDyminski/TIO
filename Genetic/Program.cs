@@ -16,10 +16,10 @@ string filename = berlin52;
 Vector2[] cities = DataReader.ReadFile(filename);
 
 var (best, worst, avg, std) = new TestRunnerBuilder()
-  .WithPopulationSize(700)
-  .WithNumberOfGenerations(1500)
+  .WithPopulationSize(100)
+  .WithNumberOfGenerations(500)
   .WithSelection(new Tour(40))
-  .WithCross(new OX())
+  .WithCross(new PMX())
   .WithCrossProb(0.8f)
   .WithMutation(new Inversion())
   .WithMutationProb(0.4f)
@@ -30,3 +30,10 @@ Console.WriteLine("Best: " + best);
 Console.WriteLine("Worst: " + worst);
 Console.WriteLine("Avg: " + avg);
 Console.WriteLine("STD: " + std);
+
+int[] p1 = new int[] { 1, 2, 3, 4, 5 };
+int[] p2 = new int[] { 4, 3, 1, 2, 5 };
+
+var cross = new PMX();
+
+var res = cross.Cross(p1, p2);
