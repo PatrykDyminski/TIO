@@ -31,12 +31,12 @@ Console.WriteLine("Worst: " + worst);
 Console.WriteLine("Avg: " + avg);
 Console.WriteLine("STD: " + std);
 
-//int[] p1 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19 };
-//int[] p2 = new int[] { 4, 3, 1, 2, 5 };
-//
-//var cross = new PMX();
-//var move = new Move();
-//var mutated = move.Mutate(p1);
-//Utils.PrintGene(mutated);
+int[] p1 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19 };
+int[] p2 = new int[] { 4, 3, 1, 2, 5 };
+
+var cross = new PMX();
+var move = new MoveInverse();
+var mutated = move.Mutate(p1);
+Utils.PrintGene(mutated);
 
 //var res = cross.Cross(p1, p2);
