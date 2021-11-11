@@ -10,9 +10,7 @@ internal class Move : IMutation
 
     if (i > j)
     {
-      int temp = i;
-      i = j;
-      j = temp;
+      (j, i) = (i, j);
     }
 
     Array.Reverse(genotype, i, j - i + 1);

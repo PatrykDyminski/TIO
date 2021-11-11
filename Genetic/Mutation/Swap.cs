@@ -7,10 +7,7 @@ internal class Swap : IMutation
     Random rnd = new();
     int i = rnd.Next(0, genotype.Length);
     int j = rnd.Next(0, genotype.Length);
-    int v = genotype[i];
-    genotype[i] = genotype[j];
-    genotype[j] = v;
-
+    (genotype[j], genotype[i]) = (genotype[i], genotype[j]);
     return genotype;
   }
 }
