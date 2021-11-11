@@ -4,7 +4,7 @@ internal class Swap : IMutation
 {
   public int[] Mutate(int[] genotype)
   {
-    Random rnd = new Random();
+    Random rnd = new();
     int i = rnd.Next(0, genotype.Length);
     int j = rnd.Next(0, genotype.Length);
     int v = genotype[i];

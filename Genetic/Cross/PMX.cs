@@ -26,8 +26,8 @@ internal class PMX : ICross
     int[] g1 = new int[length];
     int[] g2 = new int[length];
 
-    var p1l = parent1.Except(cut1).ToList();
-    var p2l = parent2.Except(cut2).ToList();
+    var p1l = parent1.Except(cut2).ToList();
+    var p2l = parent2.Except(cut1).ToList();
 
     for (int ii = 0; ii < length; ii++)
     {
@@ -37,9 +37,9 @@ internal class PMX : ICross
       }
       else
       {
-        g1[ii] = p1l[0];
+        g1[ii] = p2l[0];
       }
-      p1l.Remove(g1[ii]);
+      p2l.Remove(g1[ii]);
 
       if (ii >= i && ii < j)
       {
@@ -47,9 +47,9 @@ internal class PMX : ICross
       }
       else
       {
-        g2[ii] = p2l[0];
+        g2[ii] = p1l[0];
       }
-      p2l.Remove(g2[ii]);
+      p1l.Remove(g2[ii]);
     }
 
     //Utils.PrintGene(g1);
