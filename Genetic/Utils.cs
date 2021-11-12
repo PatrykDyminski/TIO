@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace Tio.Genetic;
 
-internal class Utils
+public class Utils
 {
   public static int[] RandomGene(int size)
   {
@@ -59,7 +59,7 @@ internal class Utils
       sum += Vector2.Distance(cities[gene[i]], cities[gene[i + 1]]);
     }
 
-    return sum + Vector2.Distance(cities[gene[0]], cities[gene[cities.Length - 1]]);
+    return sum + Vector2.Distance(cities[gene[0]], cities[gene[gene.Length - 1]]);
   }
 
   public static void PrintGene(int[] gene)
@@ -90,7 +90,8 @@ internal class Utils
     float mutProb, 
     ISelection selection,
     ICross cross,
-    IMutation mutation)
+    IMutation mutation,
+    bool mixPopulation)
   {
 
     float[] results = new float[cycles];
@@ -105,7 +106,9 @@ internal class Utils
         mutProb, 
         selection, 
         cross, 
-        mutation);
+        mutation,
+        mixPopulation
+        );
 
       results[i] = score;
 

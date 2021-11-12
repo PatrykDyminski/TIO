@@ -18,26 +18,17 @@ Vector2[] cities = DataReader.ReadFile(filename);
 var (best, worst, avg, std) = new TestRunnerBuilder()
   .WithPopulationSize(100)
   .WithNumberOfGenerations(500)
-  //.WithSelection(new Tour(40))
-  .WithSelection(new Roulette())
-  .WithCross(new OX())
+  .WithSelection(new Tour(40))
+  //.WithSelection(new Roulette())
+  .WithCross(new PMX())
   .WithCrossProb(0.8f)
   .WithMutation(new Inversion())
-  .WithMutationProb(0.4f)
+  .WithMutationProb(0.8f)
   .WithCities(cities)
-  .BuildAndRunTests(5);
+  .WithMixedPopulation(false)
+  .BuildAndRunTests(10);
 
 Console.WriteLine("Best: " + best);
 Console.WriteLine("Worst: " + worst);
 Console.WriteLine("Avg: " + avg);
 Console.WriteLine("STD: " + std);
-
-int[] p1 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19 };
-int[] p2 = new int[] { 4, 3, 1, 2, 5 };
-
-var cross = new PMX();
-var move = new MoveInverse();
-var mutated = move.Mutate(p1);
-Utils.PrintGene(mutated);
-
-//var res = cross.Cross(p1, p2);

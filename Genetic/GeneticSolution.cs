@@ -16,7 +16,8 @@ internal class GeneticSolution
     float mutProb, 
     ISelection selection, 
     ICross cross, 
-    IMutation mutation)
+    IMutation mutation,
+    bool mixPopulation)
   {
     var csv = new StringBuilder();
 
@@ -31,6 +32,12 @@ internal class GeneticSolution
     {
       //Console.WriteLine("Gen: " + i);
       var newPop = selection.Select(prevPop, cities);
+
+      if (mixPopulation)
+      {
+        newPop = newPop.OrderBy(x => rnd.Next()).ToArray();
+      }
+
       int[][] tempPop = new int[popSize][];
 
       for (int j = 0; j < newPop.Length; j += 2)

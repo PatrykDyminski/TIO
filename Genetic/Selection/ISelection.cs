@@ -2,7 +2,7 @@
 
 namespace Genetic.Selection;
 
-internal interface ISelection
+public interface ISelection
 {
   int[][] Select(int[][] population, Vector2[] cities);
 }

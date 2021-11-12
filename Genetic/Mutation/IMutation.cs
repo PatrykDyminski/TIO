@@ -1,6 +1,6 @@
 ﻿namespace Genetic.Mutation;
 
-internal interface IMutation
+public interface IMutation
 {
   int[] Mutate(int[] genotype);
 }

@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Tio.Genetic;
 
-internal class DataReader
+public class DataReader
 {
   public static Vector2[] ReadFile(string filename)
   {

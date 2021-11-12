@@ -20,6 +20,8 @@ internal class TestRunnerBuilder
   private ICross Cross { get; set; }
   private ISelection Selection { get; set; }
 
+  private bool MixPopulation { get; set; }
+
   public TestRunnerBuilder WithCities(Vector2[] cities)
   {
     Cites = cities;
@@ -68,6 +70,12 @@ internal class TestRunnerBuilder
     return this;
   }
 
+  public TestRunnerBuilder WithMixedPopulation(bool mixPopulation)
+  {
+    MixPopulation = mixPopulation;
+    return this;
+  }
+
   public (float best, float worst, float avg, float std) BuildAndRunTests(int cycles)
   {
     return Utils.RunTests(
@@ -79,6 +87,7 @@ internal class TestRunnerBuilder
       MutProb, 
       Selection, 
       Cross, 
-      Mutation);
+      Mutation,
+      MixPopulation);
   }
 }
