@@ -1,6 +1,6 @@
 ﻿namespace Genetic.Mutation;
 
-internal class Swap : IMutation
+public class Swap : IMutation
 {
   public int[] Mutate(int[] genotype)
   {

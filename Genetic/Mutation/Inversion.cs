@@ -1,6 +1,6 @@
 ﻿namespace Genetic.Mutation;
 
-internal class Inversion : IMutation
+public class Inversion : IMutation
 {
   public int[] Mutate(int[] genotype)
   {

@@ -14,9 +14,10 @@ Vector2[] cities = DataReader.ReadFile(filename);
 
 var CSO = new CsoSolution(cities);
 
-var res = CSO.CSO(4000, 10000);
+var res = CSO.CSO(100, 1000);
 
 Console.WriteLine(res.score);
+//Utils.PrintGene(res.gene);
 
 var cityA = new int[] { 1, 2, 3, 4, 5 };
 var cityB = new int[] { 4, 3, 5, 1, 2 };
