@@ -14,13 +14,19 @@ Vector2[] cities = DataReader.ReadFile(filename);
 
 var CSO = new CsoSolution(cities);
 
-var res = CSO.CSO(100, 1000);
+var res = CSO.CSO(100, 200);
 
 Console.WriteLine(res.score);
-//Utils.PrintGene(res.gene);
+Utils.PrintGene(res.gene);
 
-var cityA = new int[] { 1, 2, 3, 4, 5 };
-var cityB = new int[] { 4, 3, 5, 1, 2 };
-
-//CSO.Move(cityA, cityB);
+//var cityA = new int[] { 1, 2, 3, 4, 5 };
+//var cityB = new int[] { 4, 3, 5, 1, 2 };
+//
+//var cityC = new int[] { 1, 2, 3, 4, 5 };
+//var cityD = new int[] { 1, 2, 3, 4, 5 };
+//
+//var cityE = new int[] { 1, 2, 3, 4, 5 };
+//var cityF = new int[] { 5, 2, 3, 4, 1 };
+//
+//CSO.Move(cityE, cityF, 0);
 

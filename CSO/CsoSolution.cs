@@ -18,37 +18,33 @@ internal class CsoSolution
     int popSize,
     int iterations)
   {
-    //var csv = new StringBuilder();
+    var csv = new StringBuilder();
 
-    var initialPopulation = Utils.RandomPopulation(popSize, Cities.Length);
+    var population = Utils.RandomPopulation(popSize, Cities.Length);
 
-    var (bestGene, bestScore) = Utils.BestResultFromPopulation(initialPopulation, Cities);
+    var (bestNest, bestScore) = Utils.BestResultFromPopulation(population, Cities);
 
-    //Console.WriteLine(bestScore);
-    //Utils.PrintGene(bestGene);
+    var allTimeBestNest = bestNest;
+    var allTimeBestScore = bestScore;
 
+    var sameResultFor = 0;
+
+    //iterations
     for (int i = 0; i < iterations; i++)
     {
-      //Console.WriteLine("before");
-      //Utils.PrintPopulation(initialPopulation);
+      Console.WriteLine(bestScore);
 
-      var iterationsBestGene = bestGene;
+      var iterationsBestNest = bestNest;
       var iterationBestScore = bestScore;
 
-      //crawl to best food
+      //crawl to best food for each population member
       for (int j = 0; j < popSize; j++)
       {
-        //Utils.PrintGene(bestGene);
-
-        int[] toMove = new int[Cities.Length];
-        bestGene.CopyTo(toMove, 0);
-
-        var (gene, score) = Move(initialPopulation[j], toMove, bestScore);
+        var (nest, score) = Move(population[j], bestNest, bestScore);
         if (score < iterationBestScore)
         {
           iterationBestScore = score;
-          gene.CopyTo(iterationsBestGene, 0);
-          //Console.WriteLine("iteration best" + " " + score);
+          nest.CopyTo(iterationsBestNest, 0);
         }
       }
 
@@ -56,34 +52,79 @@ internal class CsoSolution
       if (iterationBestScore < bestScore)
       {
         bestScore = iterationBestScore;
-        iterationsBestGene.CopyTo(bestGene, 0);
-        //Console.WriteLine("best" + " " + bestScore);
-        //Utils.PrintGene(bestGene);
+        iterationsBestNest.CopyTo(bestNest, 0);
       }
-
-      //Console.WriteLine("after");
-      //Utils.PrintPopulation(initialPopulation);
 
       //search for better food
-      var mutation = new Inversion();
-
       for (int k = 0; k < popSize; k++)
       {
-        var toMutate = new int[Cities.Length];
-        initialPopulation[k].CopyTo(toMutate, 0);
-        var mutated = mutation.Mutate(toMutate);
+        //get new direction for corkroach
+        var newDirection = GetNewDirection(population[k]);
 
-        var (gene, score) = Move(initialPopulation[k], mutated, bestScore);
+        //go there
+        var (nest, score) = Move(population[k], newDirection, bestScore);
         if (score < bestScore)
         {
-          bestScore = score;
-          gene.CopyTo(bestGene, 0);
-          //Console.WriteLine("iteration best" + " " + score);
+          iterationBestScore = score;
+          nest.CopyTo(iterationsBestNest, 0);
         }
       }
+
+      //if better food found on the way
+      if (iterationBestScore < bestScore)
+      {
+        bestScore = iterationBestScore;
+        iterationsBestNest.CopyTo(bestNest, 0);
+      }
+      else
+      {
+        sameResultFor++;
+      }
+
+      //save best score
+      if(bestScore < allTimeBestScore)
+      {
+        allTimeBestNest = bestNest;
+        allTimeBestScore = bestScore;
+      }
+
+      //find new food when best has been exhausted
+      if(sameResultFor >= 10)
+      {
+        sameResultFor = 0;
+        Console.WriteLine("Ding");
+
+        allTimeBestNest = bestNest;
+        allTimeBestScore = bestScore;
+
+        population = Utils.RandomPopulation(popSize, Cities.Length);
+        (bestNest, bestScore) = Utils.BestResultFromPopulation(population, Cities);
+      }
+
+      var worstInPop = Utils.WorstResultFromPopulation(population, Cities);
+      var avgInPop = Utils.AvgResultFromPopulation(population, Cities);
+      var newLine = string.Format("{0};{1};{2};{3};;;", i, bestScore, avgInPop, worstInPop.score);
+      csv.AppendLine(newLine);
     }
 
-    return (bestGene, bestScore);
+    File.WriteAllText("results.csv", csv.ToString());
+
+    return (allTimeBestNest, allTimeBestScore);
+  }
+
+  private int[] GetNewDirection(int[] nest)
+  {
+    var random = new Random();
+
+    if(random.NextDouble() < 0.05)
+    {
+      return Utils.RandomGene(Cities.Length);
+    }
+
+    var mutation = new Inversion();
+    var toMutate = new int[Cities.Length];
+    nest.CopyTo(toMutate, 0);
+    return mutation.Mutate(toMutate);
   }
 
   public (int[] gene, float score) Move(int[] nestA, int[] nestB, float nestBscore)
@@ -113,6 +154,8 @@ internal class CsoSolution
 
   private (int[] gene, float score) Step(int[] nest, int cityA, int cityB)
   {
+    //Console.WriteLine("step: " + cityA + " " + cityB);
+
     (nest[cityA], nest[cityB]) = (nest[cityB], nest[cityA]);
     var distance = Utils.SumDistance(nest, Cities);
     return (nest, distance);
